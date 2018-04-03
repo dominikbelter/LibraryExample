@@ -49,6 +49,52 @@ if (MSVC)
   SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 endif()
 
+# Offer the user the choice of overriding the installation directories
+set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set(INSTALL_INCLUDE_DIR include CACHE PATH
+  "Installation directory for header files")
+if(WIN32 AND NOT CYGWIN)
+  set(DEF_INSTALL_CMAKE_DIR CMake)
+else()
+  set(DEF_INSTALL_CMAKE_DIR CMake)
+endif()
+set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
+
+# Make relative paths absolute (needed later on)
+foreach(p LIB BIN INCLUDE CMAKE)
+  set(var INSTALL_${p}_DIR)
+  if(NOT IS_ABSOLUTE "${${var}}")
+    set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+  endif()
+endforeach()
+
+# Create the RobotConfig.cmake
+file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
+   "${INSTALL_INCLUDE_DIR}")
+file(RELATIVE_PATH REL_LIB_DIR "${INSTALL_CMAKE_DIR}"
+   "${INSTALL_LIB_DIR}")
+
+set(CONF_INCLUDE_DIRS "${RELATIVE_PATH}" "${CMAKE_SOURCE_DIR}")
+
+set(CONF_LIB_DIRS "${RELATIVE_PATH}" "/build/lib")
+
+configure_file(RobotConfig.cmake.in
+  "${CMAKE_SOURCE_DIR}/RobotConfig.cmake" @ONLY)
+
+# ... for the install tree
+set(CONF_INCLUDE_DIRS "${CONF_INCLUDE_DIRS}/include")
+set(CONF_LIB_DIRS "${CMAKE_SOURCE_DIR}/build/lib")
+
+configure_file(RobotConfig.cmake.in
+  "${CMAKE_SOURCE_DIR}/RobotConfig.cmake" @ONLY)
+
+# Install the RobotConfig.cmake
+install(FILES
+  "${CMAKE_SOURCE_DIR}/RobotConfig.cmake"
+  DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
+
+
 ###############################################################################
 #
 # Robot library
