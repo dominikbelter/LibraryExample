@@ -17,13 +17,13 @@ class LabMate : public tutorial::Robot {
 public:
 
     /// Pointer
-    typedef std::unique_ptr<LabMate> Ptr;
+    using Ptr = std::unique_ptr<LabMate>;
 
     /// Construction
     LabMate(void);
 
     /// move to goal configuration
-    void move2conf(const std::vector<double>& goalConfiguration);
+    void move2conf(const std::vector<double>&& goalConfiguration);
 
 protected:
 

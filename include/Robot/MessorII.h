@@ -16,13 +16,13 @@ class MessorII : public tutorial::Robot {
 public:
 
     /// Pointer
-    typedef std::unique_ptr<MessorII> Ptr;
+    using Ptr = std::unique_ptr<MessorII>;
 
     /// Construction
     MessorII(void);
 
     /// move to goal configuration
-    void move2conf(const std::vector<double>& goalConfiguration);
+    void move2conf(const std::vector<double>&& goalConfiguration);
 
 protected:
 

@@ -3,12 +3,12 @@
 using namespace tutorial;
 
 
-MessorII::MessorII(void) : tutorial::Robot("Messor II", tutorial::Robot::TYPE_SIX_LEGGED, 18){
+MessorII::MessorII(void) : tutorial::Robot("Messor II", tutorial::Robot::Type::SIX_LEGGED, 18){
 
 }
 
 /// move to goal configuration
-void MessorII::move2conf(const std::vector<double>& goalConfiguration){
+void MessorII::move2conf(const std::vector<double>&& goalConfiguration){
     if (goalConfiguration.size()!=jointsNo)
         throw std::runtime_error("Incorrect number of joints");
 
@@ -19,7 +19,7 @@ void MessorII::move2conf(const std::vector<double>& goalConfiguration){
 
     // Insert robot specific code here for motion execution
     std::cout << "Motion exectution...\n";
-    configuration = goalConfiguration;
+    configuration = std::move(goalConfiguration);
     std::cout << "Done\n";
 
     std::cout << "Configuration of the " << getName() << " robot after motion execution is:\n";
@@ -27,4 +27,3 @@ void MessorII::move2conf(const std::vector<double>& goalConfiguration){
         std::cout << angle << ", ";
     std::cout << "\n\n";
 }
-

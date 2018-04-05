@@ -18,11 +18,11 @@ namespace tutorial {
         public:
 
             /// Robot type
-            enum Type {
+            enum class Type {
                     /// six-legged
-                    TYPE_SIX_LEGGED,
+                    SIX_LEGGED,
                     /// wheeled
-                    TYPE_WHEELED
+                    WHEELED
             };
 
             /// overloaded constructor
@@ -37,7 +37,7 @@ namespace tutorial {
             virtual const Type& getType() const {return type;}
 
             /// move to goal configuration
-            virtual void move2conf(const std::vector<double>& goalConfiguration) = 0;
+            virtual void move2conf(const std::vector<double>&& goalConfiguration) = 0;
 
             /// Virtual descrutor
             virtual ~Robot() {}

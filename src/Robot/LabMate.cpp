@@ -3,12 +3,12 @@
 using namespace tutorial;
 
 
-LabMate::LabMate(void) : tutorial::Robot("LabMate", tutorial::Robot::TYPE_WHEELED, 2){
+LabMate::LabMate(void) : tutorial::Robot("LabMate", tutorial::Robot::Type::WHEELED, 2) {
 
 }
 
 /// move to goal configuration
-void LabMate::move2conf(const std::vector<double>& goalConfiguration){
+void LabMate::move2conf(const std::vector<double>&& goalConfiguration){
     if (goalConfiguration.size()!=jointsNo)
         throw std::runtime_error("Incorrect number of joints");
 
@@ -18,7 +18,7 @@ void LabMate::move2conf(const std::vector<double>& goalConfiguration){
     std::cout << "\n";
 
     std::cout << "Motion exectution...\n";
-    configuration = goalConfiguration;
+    configuration = std::move(goalConfiguration);
     std::cout << "Done\n";
 
     std::cout << "Configuration of the " << getName() << " robot after motion execution is:\n";
@@ -26,4 +26,3 @@ void LabMate::move2conf(const std::vector<double>& goalConfiguration){
         std::cout << angle << ", ";
     std::cout << "\n";
 }
-
