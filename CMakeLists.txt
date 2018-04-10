@@ -7,7 +7,7 @@ SET(CMAKE_BUILD_TYPE "Release" CACHE PATH "Current build configuration")
 
 # Example Project configuration
 PROJECT(TUTORIAL_LIBRARY)
-SET(CMAKE_CXX_FLAGS "-std=c++14 -pthread")
+SET(CMAKE_CXX_FLAGS "-std=c++17")
 
 # Folders
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -109,7 +109,7 @@ if(BUILD_LIB_ROBOT)
             "${CMAKE_SOURCE_DIR}/include/Robot/*.h"
         )
 
-        ADD_LIBRARY(Robot STATIC ${ROBOT_SOURCES} ${ROBOT_HEADERS})
+        ADD_LIBRARY(Robot SHARED ${ROBOT_SOURCES} ${ROBOT_HEADERS})
 #        TARGET_LINK_LIBRARIES(Robot Utilities)
         INSTALL(TARGETS Robot RUNTIME DESTINATION bin LIBRARY DESTINATION bin ARCHIVE DESTINATION lib)
         INSTALL(FILES ${ROBOT_HEADERS} DESTINATION include/Robot/)
