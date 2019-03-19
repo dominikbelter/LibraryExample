@@ -25,6 +25,8 @@ int main()
 
         // new configuration of the LabMate robot
         robotLabMate->move2conf({1.1, 1.2});
+
+		getchar();
     }
 	catch (const std::exception& ex) {
 		std::cerr << ex.what() << std::endl;
